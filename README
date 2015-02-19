@@ -1,1 +1,13 @@
+Current version: 1.0
 Syntax: php domcheck.php domainname.com
+
+TLDs supported:
+.com
+.co
+.info
+.me
+.mobi
+.net
+.org
+.tv
+.xxx

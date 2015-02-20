@@ -1,8 +1,7 @@
-#!/usr/bin/php
 <?php
 ##################################################################################
 # The MIT License (MIT)                                                          #
-#                                                                                # 
+#                                                                                #
 # Copyright (c) 2015 Brandon Hall                                                #
 #                                                                                #
 # Permission is hereby granted, free of charge, to any person obtaining a copy   #
@@ -30,13 +29,52 @@
 #The latest version of domcheck can be found at:                                 #
 #https://github.com/bthall/domcheck                                              #
 ##################################################################################
-include ('./domcheckfunctions.php');
-$whois = exec('which whois');
-$domain = $argv[1];
-$tld = getTLD($domain);
-$whois = getWhois($domain);
-$expiration = getExpiration($domain, $tld, $whois);
-$days = getDays($expiration);
-echo 'Days until expiration:' . PHP_EOL . $days . PHP_EOL;
 
+function getTLD($domain){
+   $tld =  explode(".", $domain, 2)[1];
+   return $tld;
+}
+
+function getWhois($domain){
+   $command = exec("which whois");
+   $whois = shell_exec("$command $domain");
+   return $whois;
+}
+
+function getExpiration($domain, $tld, $whois){
+   if ($tld == 'co'){
+      $regex = '/Domain Expiration Date:\s+(.*)/';
+   } elseif ($tld == 'com'){
+      $regex = '/Expiration Date:\s+(.*)/';
+   } elseif ($tld == 'info'){
+      $regex = '/Expiry Date:\s+(.*)/';
+   } elseif ($tld == 'me'){
+      $regex = '/Expiration Date:(.*)/';
+   } elseif ($tld == 'mobi'){
+      $regex = '/Expiration Date:(.*)/';
+   } elseif ($tld == 'net'){
+      $regex = '/Expiration Date:\s(.*)/';
+   } elseif ($tld == 'org'){
+      $regex = '/Expiry Date:\s+(.*)/';
+   } elseif ($tld == 'tv'){
+      $regex = '/Expiry Date:\s+(.*)/';
+   } elseif ($tld == 'xxx'){
+      $regex = '/Expiry Date:\s+(.*)/';
+   } else {
+      echo "INVALID TLD";
+      echo 'Failed to obtain TLD for ' . $domain . PHP_EOL;
+      die;
+   }
+   preg_match($regex, $whois, $results);
+   $expiration = $results[1];
+   return $expiration;
+}
+
+function getDays($expiration){
+   $now = strtotime('today UTC');
+   $time = strtotime($expiration);
+   $days = abs($time - $now)/60/60/24;
+   $daysrounded = floor($days);
+   return $daysrounded;
+}
 ?>

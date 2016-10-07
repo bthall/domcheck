@@ -1,26 +1,30 @@
 # domcheck.php
 
-#### Easily fetch domain expiration dates from CLI
+Easily fetch domain expiration dates from CLI
 
-#### Current version: 1.1
+Current version: `1.1`
 
-##### Usage: ```php domcheck.php example.com```
+## Usage:
 
-### TLDs currently supported:
-- com
-- co
-- info
-- me
-- mobi
-- net
-- org
-- tv
-- xxx
+```bash
+./domcheck.php example.com
+```
 
-### Recent changes:
-- Updated README
-- Updated getExpiration() to use preg_match
-- Broke functions out into their own file
+## TLDs currently supported:
+* com
+* co
+* info
+* me
+* mobi
+* net
+* org
+* tv
+* xxx
 
-### Upcoming changes:
-- Allowing arguments, including *help*
+## Recent changes:
+* Updated README
+* Updated getExpiration() to use preg_match
+* Broke functions out into their own file
+
+## Upcoming changes:
+* Allowing arguments, including `help`
